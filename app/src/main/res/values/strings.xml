@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Insets Visualizer</string>
+
+    <string name="inset_type_status_bars">Status bars</string>
+    <string name="inset_type_status_bars_ignoring_visibility">Status bars (ignoring visibility)</string>
+    <string name="inset_type_navigation_bars">Navigation bars</string>
+    <string name="inset_type_navigation_bars_ignoring_visibility">Navigation bars (ignoring visibility)</string>
+    <string name="inset_type_caption_bar">Caption bar</string>
+    <string name="inset_type_caption_bar_ignoring_visibility">Caption barm(ignoring visibility)</string>
+    <string name="inset_type_tappable_element">Tappable element</string>
+    <string name="inset_type_tappable_element_ignoring_visibility">Tappable element (ignoring visibility)</string>
+    <string name="inset_type_system_gestures">System gestures</string>
+    <string name="inset_type_mandatory_system_gestures">Mandatory system gestures</string>
+    <string name="inset_type_ime">IME</string>
+    <string name="inset_type_waterfall">Waterfall</string>
+    <string name="inset_type_display_cutout">Display cutout</string>
+
+    <string name="button_label_close">Close</string>
+</resources>

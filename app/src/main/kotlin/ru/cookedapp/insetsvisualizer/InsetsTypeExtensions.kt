@@ -44,23 +44,23 @@ fun InsetsType.toInsets(): WindowInsets = when (this) {
 }
 
 fun InsetsType.toColor(): Color = when (this) {
-    InsetsType.STATUS_BARS -> 0xFFF00000
-    InsetsType.STATUS_BARS_IGNORING_VISIBILITY -> 0xFF0F0000
-    InsetsType.NAVIGATION_BARS -> 0xFF00F000
-    InsetsType.NAVIGATION_BARS_IGNORING_VISIBILITY -> 0xFF000F00
-    InsetsType.CAPTION_BAR -> 0xFF0000F0
-    InsetsType.CAPTION_BAR_IGNORING_VISIBILITY -> 0xFF00000F
-    InsetsType.TAPPABLE_ELEMENT -> 0xFFFF0000
-    InsetsType.TAPPABLE_ELEMENT_IGNORING_VISIBILITY -> 0xFF00FF00
-    InsetsType.SYSTEM_GESTURES -> 0xFF0000FF
-    InsetsType.MANDATORY_SYSTEM_GESTURES -> 0xFFF0000F
-    InsetsType.IME -> 0xFFFFF000
-    InsetsType.WATERFALL -> 0xFF000FFF
-    InsetsType.DISPLAY_CUTOUT -> 0xFF0FFFF0
-    InsetsType.SAFE_DRAWING -> 0xFFFF0000
-    InsetsType.SAFE_GESTURES -> 0xFF00FF00
-    InsetsType.SAFE_CONTENT -> 0xFF0000FF
-}.let(::Color).copy(alpha = 0.3f)
+    InsetsType.STATUS_BARS -> Color(0xFFFF0000)
+    InsetsType.STATUS_BARS_IGNORING_VISIBILITY -> Color(0xFFFF0000)
+    InsetsType.NAVIGATION_BARS -> Color(0xFF00FF00)
+    InsetsType.NAVIGATION_BARS_IGNORING_VISIBILITY -> Color(0xFF00FF00)
+    InsetsType.CAPTION_BAR -> Color(0xFF0000FF)
+    InsetsType.CAPTION_BAR_IGNORING_VISIBILITY -> Color(0xFF0000FF)
+    InsetsType.TAPPABLE_ELEMENT -> Color(0xFF34C5FA)
+    InsetsType.TAPPABLE_ELEMENT_IGNORING_VISIBILITY -> Color(0xFF34C5FA)
+    InsetsType.SYSTEM_GESTURES -> Color(0xFFF54021)
+    InsetsType.MANDATORY_SYSTEM_GESTURES -> Color(0xFFF0000F)
+    InsetsType.IME -> Color(0xFFFFF000)
+    InsetsType.WATERFALL -> Color(0xFF6634FA)
+    InsetsType.DISPLAY_CUTOUT -> Color(0xFF0FFFF0)
+    InsetsType.SAFE_DRAWING -> Color(0xFFFA34FA)
+    InsetsType.SAFE_GESTURES -> Color(0xFF34FAC2)
+    InsetsType.SAFE_CONTENT -> Color(0xFFFAE634)
+}.copy(alpha = 0.3f)
 
 @StringRes
 fun InsetsType.toName(): Int = when (this) {

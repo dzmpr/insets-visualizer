@@ -10,6 +10,9 @@ import androidx.compose.foundation.layout.ime
 import androidx.compose.foundation.layout.mandatorySystemGestures
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.navigationBarsIgnoringVisibility
+import androidx.compose.foundation.layout.safeContent
+import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.safeGestures
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.statusBarsIgnoringVisibility
 import androidx.compose.foundation.layout.systemBars
@@ -35,6 +38,9 @@ fun InsetsType.toInsets(): WindowInsets = when (this) {
     InsetsType.IME -> WindowInsets.ime
     InsetsType.WATERFALL -> WindowInsets.waterfall
     InsetsType.DISPLAY_CUTOUT -> WindowInsets.displayCutout
+    InsetsType.SAFE_DRAWING -> WindowInsets.safeDrawing
+    InsetsType.SAFE_GESTURES -> WindowInsets.safeGestures
+    InsetsType.SAFE_CONTENT -> WindowInsets.safeContent
 }
 
 fun InsetsType.toColor(): Color = when (this) {
@@ -51,6 +57,9 @@ fun InsetsType.toColor(): Color = when (this) {
     InsetsType.IME -> 0xFFFFF000
     InsetsType.WATERFALL -> 0xFF000FFF
     InsetsType.DISPLAY_CUTOUT -> 0xFF0FFFF0
+    InsetsType.SAFE_DRAWING -> 0xFFFF0000
+    InsetsType.SAFE_GESTURES -> 0xFF00FF00
+    InsetsType.SAFE_CONTENT -> 0xFF0000FF
 }.let(::Color).copy(alpha = 0.3f)
 
 @StringRes
@@ -68,4 +77,7 @@ fun InsetsType.toName(): Int = when (this) {
     InsetsType.IME -> R.string.inset_type_ime
     InsetsType.WATERFALL -> R.string.inset_type_waterfall
     InsetsType.DISPLAY_CUTOUT -> R.string.inset_type_display_cutout
+    InsetsType.SAFE_DRAWING -> R.string.inset_type_safe_drawing
+    InsetsType.SAFE_GESTURES -> R.string.inset_type_safe_gestures
+    InsetsType.SAFE_CONTENT -> R.string.inset_type_safe_content
 }

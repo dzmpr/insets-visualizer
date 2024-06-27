@@ -13,5 +13,9 @@ enum class InsetsType {
     MANDATORY_SYSTEM_GESTURES,
     IME,
     WATERFALL,
-    DISPLAY_CUTOUT;
+    DISPLAY_CUTOUT,
+    SAFE_DRAWING,
+    SAFE_GESTURES,
+    SAFE_CONTENT,
+    ;
 }

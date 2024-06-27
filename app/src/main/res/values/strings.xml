@@ -14,6 +14,9 @@
     <string name="inset_type_ime">IME</string>
     <string name="inset_type_waterfall">Waterfall</string>
     <string name="inset_type_display_cutout">Display cutout</string>
+    <string name="inset_type_safe_drawing">Safe drawing</string>
+    <string name="inset_type_safe_gestures">Safe gestures</string>
+    <string name="inset_type_safe_content">Safe content</string>
 
     <string name="button_label_close">Close</string>
 </resources>

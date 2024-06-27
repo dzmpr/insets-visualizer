@@ -34,11 +34,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -74,14 +70,16 @@ internal class MainActivity : ComponentActivity() {
                             enabledInsets.forEach { inset ->
                                 InsetTypeRow(inset)
                             }
-                            Spacer(modifier = Modifier.height(8.dp))
+                            if (enabledInsets.isNotEmpty()) {
+                                Spacer(modifier = Modifier.height(8.dp))
+                            }
                             FilledTonalButton(
                                 onClick = viewModel::onDialogOpenClicked,
                             ) {
                                 Text(text = "Select insets")
                             }
                         }
-                        ActiveInsets(enabledInsets)
+                        InsetsView(enabledInsets)
                     }
                 }
             }
@@ -150,47 +148,6 @@ internal class MainActivity : ComponentActivity() {
                 text = stringResource(insetType.toName()),
                 style = MaterialTheme.typography.bodyLarge,
             )
-        }
-    }
-
-    @Composable
-    private fun ActiveInsets(enabledInsets: EnumSet<InsetsType>) {
-        val density = LocalDensity.current
-        val layoutDirection = LocalLayoutDirection.current
-        enabledInsets.forEach { insetType ->
-            val insetColor = insetType.toColor()
-            val insets = insetType.toInsets()
-            val topPadding = insets.getTop(density).toFloat()
-            val bottomPadding = insets.getBottom(density).toFloat()
-            val leftPadding = insets.getLeft(density, layoutDirection).toFloat()
-            val rightPadding = insets.getRight(density, layoutDirection).toFloat()
-
-            Canvas(modifier = Modifier.fillMaxSize()) {
-                // Top padding
-                drawRect(
-                    color = insetColor,
-                    topLeft = Offset.Zero,
-                    size = Size(width = size.width, height = topPadding)
-                )
-                // Bottom padding
-                drawRect(
-                    color = insetColor,
-                    topLeft = Offset(x = 0f, y = size.height - bottomPadding),
-                    size = Size(width = size.width, height = bottomPadding),
-                )
-                // Left padding
-                drawRect(
-                    color = insetColor,
-                    topLeft = Offset.Zero,
-                    size = Size(width = leftPadding, height = size.height)
-                )
-                // Right padding
-                drawRect(
-                    color = insetColor,
-                    topLeft = Offset(x = size.width - rightPadding, y = 0f),
-                    size = Size(width = rightPadding, height = size.height)
-                )
-            }
         }
     }
 }

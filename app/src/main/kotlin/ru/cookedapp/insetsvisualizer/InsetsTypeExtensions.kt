@@ -21,26 +21,39 @@ import androidx.compose.foundation.layout.tappableElementIgnoringVisibility
 import androidx.compose.foundation.layout.waterfall
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalLayoutDirection
 
 @Composable
 @OptIn(ExperimentalLayoutApi::class)
-fun InsetsType.toInsets(): WindowInsets = when (this) {
-    InsetsType.STATUS_BARS -> WindowInsets.statusBars
-    InsetsType.STATUS_BARS_IGNORING_VISIBILITY -> WindowInsets.statusBarsIgnoringVisibility
-    InsetsType.NAVIGATION_BARS -> WindowInsets.navigationBars
-    InsetsType.NAVIGATION_BARS_IGNORING_VISIBILITY -> WindowInsets.navigationBarsIgnoringVisibility
-    InsetsType.CAPTION_BAR -> WindowInsets.captionBar
-    InsetsType.CAPTION_BAR_IGNORING_VISIBILITY -> WindowInsets.captionBarIgnoringVisibility
-    InsetsType.TAPPABLE_ELEMENT -> WindowInsets.tappableElement
-    InsetsType.TAPPABLE_ELEMENT_IGNORING_VISIBILITY -> WindowInsets.tappableElementIgnoringVisibility
-    InsetsType.SYSTEM_GESTURES -> WindowInsets.systemBars
-    InsetsType.MANDATORY_SYSTEM_GESTURES -> WindowInsets.mandatorySystemGestures
-    InsetsType.IME -> WindowInsets.ime
-    InsetsType.WATERFALL -> WindowInsets.waterfall
-    InsetsType.DISPLAY_CUTOUT -> WindowInsets.displayCutout
-    InsetsType.SAFE_DRAWING -> WindowInsets.safeDrawing
-    InsetsType.SAFE_GESTURES -> WindowInsets.safeGestures
-    InsetsType.SAFE_CONTENT -> WindowInsets.safeContent
+fun InsetsType.toInsetsData(): WindowInsetsData {
+    val density = LocalDensity.current
+    val layoutDirection = LocalLayoutDirection.current
+    val insets = when (this) {
+        InsetsType.STATUS_BARS -> WindowInsets.statusBars
+        InsetsType.STATUS_BARS_IGNORING_VISIBILITY -> WindowInsets.statusBarsIgnoringVisibility
+        InsetsType.NAVIGATION_BARS -> WindowInsets.navigationBars
+        InsetsType.NAVIGATION_BARS_IGNORING_VISIBILITY -> WindowInsets.navigationBarsIgnoringVisibility
+        InsetsType.CAPTION_BAR -> WindowInsets.captionBar
+        InsetsType.CAPTION_BAR_IGNORING_VISIBILITY -> WindowInsets.captionBarIgnoringVisibility
+        InsetsType.TAPPABLE_ELEMENT -> WindowInsets.tappableElement
+        InsetsType.TAPPABLE_ELEMENT_IGNORING_VISIBILITY -> WindowInsets.tappableElementIgnoringVisibility
+        InsetsType.SYSTEM_GESTURES -> WindowInsets.systemBars
+        InsetsType.MANDATORY_SYSTEM_GESTURES -> WindowInsets.mandatorySystemGestures
+        InsetsType.IME -> WindowInsets.ime
+        InsetsType.WATERFALL -> WindowInsets.waterfall
+        InsetsType.DISPLAY_CUTOUT -> WindowInsets.displayCutout
+        InsetsType.SAFE_DRAWING -> WindowInsets.safeDrawing
+        InsetsType.SAFE_GESTURES -> WindowInsets.safeGestures
+        InsetsType.SAFE_CONTENT -> WindowInsets.safeContent
+    }
+    return WindowInsetsData(
+        type = this,
+        top = insets.getTop(density).toFloat(),
+        bottom = insets.getBottom(density).toFloat(),
+        left = insets.getLeft(density, layoutDirection).toFloat(),
+        right = insets.getRight(density, layoutDirection).toFloat(),
+    )
 }
 
 fun InsetsType.toColor(): Color = when (this) {

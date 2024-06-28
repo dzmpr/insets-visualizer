@@ -21,12 +21,14 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.BasicAlertDialog
+import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -34,7 +36,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -61,25 +66,47 @@ internal class MainActivity : ComponentActivity() {
 
                 AlertDialog(isOpened = isDialogOpened, enabledInsets = enabledInsets)
 
-                Surface(color = MaterialTheme.colorScheme.surfaceContainerLowest) {
-                    Box(
-                        modifier = Modifier.fillMaxSize(),
-                        contentAlignment = Alignment.Center,
+                Box(
+                    contentAlignment = Alignment.Center,
+                ) {
+                    val focusRequester = remember { FocusRequester() }
+                    TextField(
+                        value = "",
+                        onValueChange = {},
+                        modifier = Modifier.focusRequester(focusRequester),
+                    )
+                    Surface(
+                        color = MaterialTheme.colorScheme.surfaceContainerLowest,
                     ) {
-                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                            enabledInsets.forEach { inset ->
-                                InsetTypeRow(inset)
+                        Box(
+                            modifier = Modifier.fillMaxSize(),
+                            contentAlignment = Alignment.Center,
+                        ) {
+                            val insetsData = enabledInsets.map { it.toInsetsData() }
+                            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                                insetsData.forEach { data ->
+                                    InsetTypeRow(data)
+                                }
+                                if (enabledInsets.isNotEmpty()) {
+                                    Spacer(modifier = Modifier.height(8.dp))
+                                }
+                                Button(
+                                    onClick = viewModel::onDialogOpenClicked,
+                                ) {
+                                    Text(text = "Select insets")
+                                }
+                                val keyboardController = LocalSoftwareKeyboardController.current
+                                FilledTonalButton(
+                                    onClick = {
+                                        focusRequester.requestFocus()
+                                        keyboardController?.show()
+                                    },
+                                ) {
+                                    Text(text = "Show keyboard")
+                                }
                             }
-                            if (enabledInsets.isNotEmpty()) {
-                                Spacer(modifier = Modifier.height(8.dp))
-                            }
-                            FilledTonalButton(
-                                onClick = viewModel::onDialogOpenClicked,
-                            ) {
-                                Text(text = "Select insets")
-                            }
+                            InsetsView(insetsData)
                         }
-                        InsetsView(enabledInsets)
                     }
                 }
             }
@@ -132,7 +159,7 @@ internal class MainActivity : ComponentActivity() {
     }
 
     @Composable
-    fun InsetTypeRow(insetType: InsetsType) {
+    fun InsetTypeRow(insetsData: WindowInsetsData) {
         Row(
             modifier = Modifier.padding(all = 4.dp),
             verticalAlignment = Alignment.CenterVertically,
@@ -141,11 +168,14 @@ internal class MainActivity : ComponentActivity() {
             Canvas(modifier = Modifier.size(24.dp)) {
                 drawCircle(color = onSurfaceVariantColor)
                 drawCircle(color = Color.White, radius = 10.dp.toPx())
-                drawCircle(color = insetType.toColor(), radius = 10.dp.toPx())
+                drawCircle(color = insetsData.type.toColor(), radius = 10.dp.toPx())
             }
             Spacer(modifier = Modifier.width(8.dp))
             Text(
-                text = stringResource(insetType.toName()),
+                text = buildString {
+                    append(stringResource(insetsData.type.toName()))
+                    append(" $insetsData")
+                },
                 style = MaterialTheme.typography.bodyLarge,
             )
         }

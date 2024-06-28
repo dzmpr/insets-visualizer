@@ -13,18 +13,15 @@ import androidx.compose.ui.platform.LocalLayoutDirection
 import java.util.EnumSet
 
 @Composable
-internal fun InsetsView(insets: EnumSet<InsetsType>) {
-    val density = LocalDensity.current
-    val layoutDirection = LocalLayoutDirection.current
-    val typeToInsets = insets.associateWith { it.toInsets() }
+internal fun InsetsView(insetsData: List<WindowInsetsData>) {
     Canvas(modifier = Modifier.fillMaxSize()) {
-        typeToInsets.forEach { (type, insets) ->
+        insetsData.forEach { data ->
             drawInsets(
-                color = type.toColor(),
-                top = insets.getTop(density).toFloat(),
-                bottom = insets.getBottom(density).toFloat(),
-                left = insets.getLeft(density, layoutDirection).toFloat(),
-                right = insets.getRight(density, layoutDirection).toFloat(),
+                color = data.type.toColor(),
+                top = data.top,
+                bottom = data.bottom,
+                left = data.left,
+                right = data.right,
             )
         }
     }

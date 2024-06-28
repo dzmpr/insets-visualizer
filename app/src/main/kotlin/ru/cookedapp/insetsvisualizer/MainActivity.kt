@@ -83,7 +83,12 @@ internal class MainActivity : ComponentActivity() {
                             contentAlignment = Alignment.Center,
                         ) {
                             val insetsData = enabledInsets.map { it.toInsetsData() }
-                            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                            Column(
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                modifier = Modifier
+                                    .verticalScroll(rememberScrollState())
+                                    .padding(vertical = 24.dp),
+                            ) {
                                 insetsData.forEach { data ->
                                     InsetTypeRow(data)
                                 }
